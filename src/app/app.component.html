@@ -1,21 +1,69 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<div class="jumbotron">
+  <div class="row">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-10">
+      <form (ngSubmit)="searchCompany(newForm)" #newForm="ngForm">
+        <h1 class="h3 mb-3 font-weight-normal">{{ title }}:</h1>
+        <input type="text"
+               class="form-control"
+               name="name"
+               placeholder="Entreprise, firme, société, compagnie,..."
+               required autofocus
+               [(ngModel)]="company.name">
+        <input type="text"
+               class="form-control"
+               name="country"
+               placeholder="Code du pays (fr, de, ...)"
+               required
+               [(ngModel)]="company.country">
+        <input type="text"
+               class="form-control"
+               name="city"
+               placeholder="Ville (optionnel)"
+               required
+               [(ngModel)]="company.city">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Recherche</button>
+      </form>
+
+      <br>
+      <div class="container-fluid">
+        <div class="row" *ngIf="resultNum != 0">
+          <div class="col-sm-4">
+            <p><b>Nom</b></p>
+          </div>
+          <div class="col-sm-6">
+            <p><b>Adresse</b></p>
+          </div>
+          <div class="col-sm-2">
+            <p><b>Plus d'informations á</b></p>
+          </div>
+        </div>
+        <div *ngFor="let company of companies">
+          <div class="row">
+            <div class="col-sm-4">
+              <p>{{company.company.name}}</p>
+            </div>
+            <div class="col-sm-6">
+              <p>{{company.company.registered_address_in_full}}</p>
+            </div>
+            <div class="col-sm-2">
+              <p><a href="{{company.company.opencorporates_url}}">Site 1</a></p>
+              <div *ngIf="company.company.registry_url != null">
+                <p><a href="{{company.company.registry_url}}">Site 2</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="resultNum === 0 && search == true">
+          <p>Aucune entreprise trouvée.</p>
+        </div>
+      </div>
+      <p class="mt-5 mb-3 text-muted">Hackathon Saint-Étienne - Novembre 2018</p>
+    </div>
+    <div class="col-md-1">
+    </div>
+  </div>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
 
 <router-outlet></router-outlet>
